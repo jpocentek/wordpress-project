@@ -1,0 +1,36 @@
+version: '3.6'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: itsasecret
+      MYSQL_DATABASE: wordpress
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 3
+
+  phpfpm:
+    image: bitnami/php-fpm:8.0
+    volumes:
+      - ./wordpress:/app
+      - ./php.ini:/opt/bitnami/php/etc/conf.d/php.ini
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+    image: bitnami/nginx:1.19
+    ports:
+      - 8080:80
+    volumes:
+      - ./wordpress:/app
+      - ./server.conf:/opt/bitnami/nginx/conf/server_blocks/server.conf
+    depends_on:
+      - phpfpm
