@@ -90,4 +90,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . 'wp-settings.php';
 
 /** Allow file upload despite file permissions */
-define('FS_METHOD', 'direct');
+define( 'FS_METHOD', 'direct' );
