@@ -20,7 +20,7 @@ services:
     build: .
     volumes:
       - ./wordpress:/app
-      - ./php.ini:/opt/bitnami/php/etc/conf.d/php.ini
+      - ./php.ini:/opt/bitnami/php/etc/conf.d/wordpress.ini
     depends_on:
       mysql:
         condition: service_healthy

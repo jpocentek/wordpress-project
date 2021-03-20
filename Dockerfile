@@ -1,4 +1,4 @@
-FROM bitnami/php-fpm:8.0
+FROM bitnami/php-fpm:7.4
 
 RUN install_packages \
     fontconfig-config fonts-dejavu-core imagemagick-6-common \
@@ -6,6 +6,6 @@ RUN install_packages \
     liblcms2-2 liblqr-1-0 libltdl7 libmagickcore-6.q16-6 \
     libmagickwand-6.q16-6 libopenjp2-7 libtiff5 libx11-6 libx11-data libxau6 \
     libxcb1 libxdmcp6 libxext6 unzip \
-    gcc make autoconf libc-dev pkg-config libmagickwand-dev
-
-RUN pecl install redis imagick
+    gcc make autoconf libc-dev pkg-config libmagickwand-dev && \
+    pecl install redis imagick && \
+    echo "extension=imagick.so\n[www]\nenv[MAGICK_CODER_MODULE_PATH]='/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.7/modules-Q16/coders'" > /opt/bitnami/php/etc/php-fpm.d/imagemagick.conf
