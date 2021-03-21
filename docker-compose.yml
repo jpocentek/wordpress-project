@@ -17,7 +17,7 @@ services:
       retries: 3
 
   phpfpm:
-    image: bitnami/php-fpm:8.0
+    build: .
     volumes:
       - ./wordpress:/app
       - ./php.ini:/opt/bitnami/php/etc/conf.d/wordpress.ini
