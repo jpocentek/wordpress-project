@@ -20,7 +20,7 @@ services:
     image: bitnami/php-fpm:8.0
     volumes:
       - ./wordpress:/app
-      - ./php.ini:/opt/bitnami/php/etc/conf.d/php.ini
+      - ./php.ini:/opt/bitnami/php/etc/conf.d/wordpress.ini
     depends_on:
       mysql:
         condition: service_healthy
@@ -31,6 +31,6 @@ services:
       - 8080:80
     volumes:
       - ./wordpress:/app
-      - ./server.conf:/opt/bitnami/nginx/conf/server_blocks/server.conf
+      - ./server.conf:/opt/bitnami/nginx/conf/server_blocks/wordpress.conf
     depends_on:
       - phpfpm
